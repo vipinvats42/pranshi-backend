@@ -72,15 +72,28 @@
 	</div>
 	
 	<div>
+	<form th:action="@{/users/page/1}" class="form-inline m-3">
+	<input type="hidden" name="sortField" th:value="${sortField}"/>
+	<input type="hidden" name="sortOrder" th:value="${sortOrder}"/>
+	Filter:&nbsp;
+	<input type="search" name="keyword" th:value="${keyword}" class="form-control" required/>
+	&nbsp;&nbsp;
+	<input type="submit" value="Search" class="btn btn-primary" />
+	&nbsp;&nbsp;
+	<input type="button" value="Clear" class="btn btn-secondary" onclick="clearFilter()">
+	</form>
+	</div>
+	
+	<div>
 		<table class="table table-bordered table-striped table-hover table-responsive-xl">
 			<thead class="thead-dark">
 				<tr>
 					<th>
 					<a th:if="${sortField!='id'}" class="text-white"
-						th:href="@{'/users/page/'+${currentPage} + '?sortField=id&sortOrder='+${sortOrder}}">User ID</a>
+						th:href="@{'/users/page/'+${currentPage} + '?sortField=id&sortOrder='+${sortOrder}+ ${keyword!=null ? '&keyword='+keyword : ''}}">User ID</a>
 						 
 						<a th:if="${sortField=='id'}" class="text-white"
-						th:href="@{'/users/page/'+${currentPage} + '?sortField=id&sortOrder='+${reverseOrder}}">User ID</a>
+						th:href="@{'/users/page/'+${currentPage} + '?sortField=id&sortOrder='+${reverseOrder}+ ${keyword!=null ? '&keyword='+ keyword : ''}}">User ID</a>
 						
 						
 						<span th:if="${sortField=='id'}"
@@ -90,10 +103,10 @@
 					<th>Photos</th>
 					<th>
 					<a th:if="${sortField!='emailId'}" class="text-white"
-						th:href="@{'/users/page/'+${currentPage} + '?sortField=emailId&sortOrder='+${sortOrder}}">E-mail</a>
+						th:href="@{'/users/page/'+${currentPage} + '?sortField=emailId&sortOrder='+${sortOrder}+ ${keyword!=null ? '&keyword='+keyword : ''}}">E-mail</a>
 						 
 						<a th:if="${sortField=='emailId'}" class="text-white"
-						th:href="@{'/users/page/'+${currentPage} + '?sortField=emailId&sortOrder='+${reverseOrder}}">E-mail</a>
+						th:href="@{'/users/page/'+${currentPage} + '?sortField=emailId&sortOrder='+${reverseOrder} + ${keyword!=null ? '&keyword='+keyword : ''}}">E-mail</a>
 						
 						
 						<span th:if="${sortField=='emailId'}"
@@ -103,10 +116,10 @@
 					
 					<th>
 						<a th:if="${sortField!='firstName'}" class="text-white"
-						th:href="@{'/users/page/'+${currentPage} + '?sortField=firstName&sortOrder='+${sortOrder}}">First Name</a>
+						th:href="@{'/users/page/'+${currentPage} + '?sortField=firstName&sortOrder='+${sortOrder}+ ${keyword!=null ? '&keyword='+keyword : ''}}">First Name</a>
 						 
 						<a th:if="${sortField=='firstName'}" class="text-white"
-						th:href="@{'/users/page/'+${currentPage} + '?sortField=firstName&sortOrder='+${reverseOrder}}">First Name</a>
+						th:href="@{'/users/page/'+${currentPage} + '?sortField=firstName&sortOrder='+${reverseOrder}+ ${keyword!=null ? '&keyword='+keyword : ''}}">First Name</a>
 						
 						
 						<span th:if="${sortField=='firstName'}"
@@ -116,10 +129,10 @@
 					
 					<th>
 					<a th:if="${sortField=='lastName'}" class="text-white"
-					 th:href="@{'/users/page/'+${currentPage} + '?sortField=lastName&sortOrder='+${reverseOrder}}">Last Name</a>
+					 th:href="@{'/users/page/'+${currentPage} + '?sortField=lastName&sortOrder='+${reverseOrder} + ${keyword!=null ? '&keyword='+keyword : ''}}">Last Name</a>
 					 
 					 <a th:if="${sortField!='lastName'}" class="text-white"
-						th:href="@{'/users/page/'+${currentPage} + '?sortField=lastName&sortOrder='+${sortOrder}}">Last Name</a>
+						th:href="@{'/users/page/'+${currentPage} + '?sortField=lastName&sortOrder='+${sortOrder}+ ${keyword!=null ? '&keyword='+keyword : ''}}">Last Name</a>
 						
 						
 					<span th:if="${sortField=='lastName'}"
@@ -177,26 +190,26 @@
 	<span>No users found.</span>
 	</div>
 	
-	<div>
+	<div th:if="${totalPages>1}">
 	
 	<!--boostrap pagination code copy from  : https://getbootstrap.com/docs/4.0/components/pagination/  -->
 			<nav>
 		    <ul class="pagination justify-content-center">
 		    <li th:class="${currentPage>1? 'page-item' : 'page-item disabled'}">
-		    <a class="page-link" th:href="@{'/users/page/1?sortField=' +${sortField} +'&sortOrder=' +${sortOrder}}">First</a></li>
+		    <a class="page-link" th:href="@{'/users/page/1?sortField=' +${sortField} +'&sortOrder=' +${sortOrder} + ${keyword!=null ? '&keyword='+keyword : ''}}">First</a></li>
 		    
 		    <li th:class="${currentPage>1? 'page-item' : 'page-item disabled'}">
-		    <a class="page-link" th:href="@{'/users/page/'+${currentPage-1} +'?sortField=' +${sortField} +'&sortOrder=' +${sortOrder}}">Previous</a></li>
+		    <a class="page-link" th:href="@{'/users/page/'+${currentPage-1} +'?sortField=' +${sortField} +'&sortOrder=' +${sortOrder} + ${keyword!=null ? '&keyword='+keyword : ''}}">Previous</a></li>
 		    
 		    <li th:class="${currentPage!=i ? 'page-item' :'page-item active'}" th:each="i:${#numbers.sequence(1,totalPages)}">
-		   		 <a class="page-link" th:href="@{'/users/page/'+${i} + '?sortField=' +${sortField} +'&sortOrder=' +${sortOrder} }">[[${i}]]</a>
+		   		 <a class="page-link" th:href="@{'/users/page/'+${i} + '?sortField=' +${sortField} +'&sortOrder=' +${sortOrder} + ${keyword!=null ? '&keyword='+keyword : ''}}">[[${i}]]</a>
 		    </li>
 		    
 		    <li th:class="${currentPage<totalPages ? 'page-item' : 'page-item disabled'}">
-		    <a class="page-link" th:href="@{'/users/page/' +${currentPage+1} + '?sortField=' +${sortField} +'&sortOrder=' +${sortOrder}}">Next</a></li>
+		    <a class="page-link" th:href="@{'/users/page/' +${currentPage+1} + '?sortField=' +${sortField} +'&sortOrder=' +${sortOrder} + ${keyword!=null ? '&keyword='+keyword : ''}}">Next</a></li>
 		    
 		    <li th:class="${currentPage<totalPages ? 'page-item' : 'page-item disabled'}">
-		    <a class="page-link" th:href="@{'/users/page/' +${totalPages} + '?sortField=' +${sortField} +'&sortOrder=' +${sortOrder}}">Last</a></li>
+		    <a class="page-link" th:href="@{'/users/page/'+${totalPages}+'?sortField='+${sortField} +'&sortOrder='+${sortOrder} + ${keyword!=null ? '&keyword='+keyword : ''}}">Last</a></li>
 		  </ul>
 		  </nav>
 	
@@ -244,6 +257,10 @@
 		
 	 });
  });
+ 
+ function clearFilter(){
+	 window.location="[[@{/users}]]"
+ }
 
 </script>
 </body>
