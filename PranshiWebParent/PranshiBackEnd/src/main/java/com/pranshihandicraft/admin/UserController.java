@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
@@ -18,6 +19,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.common.pranshihandicraft.entity.Role;
 import com.common.pranshihandicraft.entity.User;
+
+import jakarta.servlet.http.HttpServletResponse;
 
 
 
@@ -170,5 +173,11 @@ public class UserController {
 	}
 	
 	
+	@GetMapping("/users/export/csv")
+	public void exportToCSV(HttpServletResponse respose) throws IOException {
+		List<User> listUser=userService.listAll();
+		UserCsvExporter exporter = new UserCsvExporter(); 
+		exporter.export(listUser, respose);
+	}
 
 }
