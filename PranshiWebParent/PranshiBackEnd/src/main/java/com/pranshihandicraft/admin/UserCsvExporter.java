@@ -20,11 +20,11 @@ public class UserCsvExporter {
 	{
 		DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
 		String timeStamp = dateFormatter.format(new Date());
-		String fileName="users_"+timeStamp+".csv";
+		String fileName="users_"+timeStamp +".csv";
 		
 		response.setContentType("text/csv");
 		String headerKey="Content-Disposition";
-		String headerValue="attachment; fileName"+fileName;
+		String headerValue="attachment; fileName="+fileName;
 		response.setHeader(headerKey, headerValue);
 		
 		
