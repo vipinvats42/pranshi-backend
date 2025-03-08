@@ -109,8 +109,14 @@ public class UserController {
 		
 		redirectAttributes.addFlashAttribute("message","The user has been save successully");
 		
-		return "redirect:/users";
+		return getRedirectUrlToAffectedUser(user);
 		
+	}
+
+	private String getRedirectUrlToAffectedUser(User user) {
+		String firstPartOfEmail = user.getEmailId().substring(0, user.getEmailId().indexOf("@"));
+		
+		return "redirect:/users/page/1?sortField=id&sortOrder=asc&keyword="+firstPartOfEmail;
 	}
 	
 	
