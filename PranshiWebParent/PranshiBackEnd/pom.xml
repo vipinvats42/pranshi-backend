@@ -37,6 +37,14 @@
 		<artifactId>spring-boot-devtools</artifactId>
 	</dependency>
 	
+	
+	<dependency>
+	    <groupId>net.sf.supercsv</groupId>
+	    <artifactId>super-csv</artifactId>
+	    <version>2.4.0</version>
+	</dependency>
+
+	
 	<dependency>
 	<groupId>com.pranshihandicraft</groupId>
 	<artifactId>PranshiCommon</artifactId>
